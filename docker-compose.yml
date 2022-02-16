@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: noventech
+    image: postgres:9.5
+    # image: postgres:13.5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-9:/var/lib/postgresql/data
+      # - postgres-13:/var/lib/postgresql/data
+  rabbitmq:
+    image: rabbitmq:3.9.13-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+      - rabbitmq-logs:/var/log/rabbitmq
+  redis:
+    command: redis-server
+    image: redis:5-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+
+volumes:
+  postgres-9:
+  postgres-13:
+  rabbitmq:
+  rabbitmq-logs:
+  redis:
