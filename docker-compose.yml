@@ -3,12 +3,14 @@ services:
   db:
     environment:
       POSTGRES_PASSWORD: noventech
-    image: postgres:9.5
+    # image: postgres:9.5
+    image: postgres:11.6
     # image: postgres:13.5
     ports:
       - 5432:5432
     volumes:
-      - postgres-9:/var/lib/postgresql/data/
+      # - postgres-9:/var/lib/postgresql/data/
+      - postgres-11:/var/lib/postgresql/data/
       # - postgres-13:/var/lib/postgresql/data
   rabbitmq:
     hostname: 'shared-rabbitmq'
@@ -32,6 +34,7 @@ services:
 
 volumes:
   postgres-9:
+  postgres-11:
   postgres-13:
   rabbitmq:
   rabbitmq-logs:
