@@ -6,25 +6,29 @@ services:
     image: postgres:9.5
     # image: postgres:13.5
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
-      - postgres-9:/var/lib/postgresql/data
+      - postgres-9:/var/lib/postgresql/data/
       # - postgres-13:/var/lib/postgresql/data
   rabbitmq:
-    image: rabbitmq:3.9.13-management
+    hostname: 'shared-rabbitmq'
+    image: rabbitmq:3-management
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - 15672:15672
+      - 5672:5672
+    restart: always
     volumes:
-      - rabbitmq:/var/lib/rabbitmq
-      - rabbitmq-logs:/var/log/rabbitmq
+      - rabbitmq:/var/lib/rabbitmq/mnesia/
+      - rabbitmq:/var/log/rabbitmq/
+      # - '~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia/'
+      # - '~/.docker-conf/rabbitmq/logs/:/var/log/rabbitmq/'
   redis:
     command: redis-server
     image: redis:5-alpine
     ports:
       - "6379:6379"
     volumes:
-      - redis:/data
+      - redis:/data/
 
 volumes:
   postgres-9:
