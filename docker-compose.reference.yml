@@ -4,13 +4,15 @@ services:
     environment:
       POSTGRES_PASSWORD: noventech
     # image: postgres:9.5
-    image: postgres:11.6
+    # image: postgres:10.9
+    # image: postgres:11.6
     # image: postgres:13.5
     ports:
       - 5432:5432
     volumes:
       # - postgres-9:/var/lib/postgresql/data/
-      - postgres-11:/var/lib/postgresql/data/
+      # - postgres-10:/var/lib/postgresql/data/
+      # - postgres-11:/var/lib/postgresql/data/
       # - postgres-13:/var/lib/postgresql/data
   rabbitmq:
     hostname: 'shared-rabbitmq'
@@ -21,7 +23,7 @@ services:
     restart: always
     volumes:
       - rabbitmq:/var/lib/rabbitmq/mnesia/
-      - rabbitmq:/var/log/rabbitmq/
+      - rabbitmq-logs:/var/log/rabbitmq/
       # - '~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia/'
       # - '~/.docker-conf/rabbitmq/logs/:/var/log/rabbitmq/'
   redis:
@@ -34,6 +36,7 @@ services:
 
 volumes:
   postgres-9:
+  postgres-10:
   postgres-11:
   postgres-13:
   rabbitmq:
