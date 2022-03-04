@@ -1,19 +1,30 @@
 version: '3.9'
 services:
-  db:
+  mysql:
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: noventech
+      MYSQL_ROOT_HOST: '%'
+    image: mysql/mysql-server:8.0.23
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - mysql-8:/var/lib/mysql
+  postgres:
     environment:
       POSTGRES_PASSWORD: noventech
     # image: postgres:9.5
     # image: postgres:10.9
     # image: postgres:11.6
-    # image: postgres:13.5
+    image: postgres:13.5
     ports:
       - 5432:5432
     volumes:
       # - postgres-9:/var/lib/postgresql/data/
       # - postgres-10:/var/lib/postgresql/data/
       # - postgres-11:/var/lib/postgresql/data/
-      # - postgres-13:/var/lib/postgresql/data
+      - postgres-13:/var/lib/postgresql/data
   rabbitmq:
     hostname: 'shared-rabbitmq'
     image: rabbitmq:3-management
@@ -35,6 +46,7 @@ services:
       - redis:/data/
 
 volumes:
+  mysql-8:
   postgres-9:
   postgres-10:
   postgres-11:
