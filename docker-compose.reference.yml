@@ -11,6 +11,19 @@ services:
     restart: always
     volumes:
       - mysql-8:/var/lib/mysql
+
+  mssql:
+    environment:
+      SA_PASSWORD: "<Noventech1234!>"
+      ACCEPT_EULA: "Y"
+      # username is SA
+    # image: mcr.microsoft.com/mssql/server:2017-latest
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-17:/var/opt/mssql
+
   postgres:
     environment:
       POSTGRES_PASSWORD: noventech
@@ -25,6 +38,7 @@ services:
       # - postgres-10:/var/lib/postgresql/data/
       # - postgres-11:/var/lib/postgresql/data/
       - postgres-13:/var/lib/postgresql/data
+
   rabbitmq:
     hostname: 'shared-rabbitmq'
     image: rabbitmq:3-management
@@ -37,6 +51,7 @@ services:
       - rabbitmq-logs:/var/log/rabbitmq/
       # - '~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia/'
       # - '~/.docker-conf/rabbitmq/logs/:/var/log/rabbitmq/'
+
   redis:
     command: redis-server
     image: redis:5-alpine
@@ -46,6 +61,7 @@ services:
       - redis:/data/
 
 volumes:
+  mssql-17:
   mysql-8:
   postgres-9:
   postgres-10:
