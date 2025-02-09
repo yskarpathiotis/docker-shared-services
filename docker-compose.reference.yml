@@ -1,5 +1,30 @@
 version: '3.9'
 services:
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: noventech
+    image: postgres:${POSTGRES_VERSION:-11.6}
+    # image: postgres:9.5
+    # image: postgres:10.9
+    # image: postgres:11.6
+    # image: postgres:13.5
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-${VOLUME_VERSION:-11}:/var/lib/postgresql/data/
+      # - postgres-9:/var/lib/postgresql/data/
+      # - postgres-10:/var/lib/postgresql/data/
+      # - postgres-11:/var/lib/postgresql/data/
+      # - postgres-13:/var/lib/postgresql/data
+
+  redis:
+    command: redis-server
+    # image: redis:5-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data/
+
   mysql:
     command: --default-authentication-plugin=mysql_native_password
     environment:
@@ -24,21 +49,6 @@ services:
     volumes:
       - mssql-17:/var/opt/mssql
 
-  postgres:
-    environment:
-      POSTGRES_PASSWORD: noventech
-    # image: postgres:9.5
-    # image: postgres:10.9
-    # image: postgres:11.6
-    image: postgres:13.5
-    ports:
-      - 5432:5432
-    volumes:
-      # - postgres-9:/var/lib/postgresql/data/
-      # - postgres-10:/var/lib/postgresql/data/
-      # - postgres-11:/var/lib/postgresql/data/
-      - postgres-13:/var/lib/postgresql/data
-
   rabbitmq:
     hostname: 'shared-rabbitmq'
     image: rabbitmq:3-management
@@ -51,14 +61,6 @@ services:
       - rabbitmq-logs:/var/log/rabbitmq/
       # - '~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia/'
       # - '~/.docker-conf/rabbitmq/logs/:/var/log/rabbitmq/'
-
-  redis:
-    command: redis-server
-    image: redis:5-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis:/data/
 
 volumes:
   mssql-17:
